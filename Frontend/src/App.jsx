@@ -5,10 +5,12 @@ import CreateSlam from "./pages/CreateSlam";
 import Slambrary from "./pages/Slambrary";
 import Login from "./pages/Login";
 import SlamPage from "./pages/SlamPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/createslam" element={<CreateSlam />} />
