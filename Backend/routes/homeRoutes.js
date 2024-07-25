@@ -1,9 +1,9 @@
 const express = require('express');
-
-//SlamCard Model
-const SlamCard = require('../models/slamcardModel')
-
 const router = express.Router();
+
+// Controller:
+const initialRouteController = require('../controllers/initialRouteController')
+
 
 router.get('/', (req, res) => {
     res.send("Backend is Working!!!");
@@ -11,14 +11,10 @@ router.get('/', (req, res) => {
 
 
 router.route('/createslam')
-    .post(async(req, res) => {
-    try {
-            const slamcard = new SlamCard({ questions: req.body[0], slamname: req.body[1], createddate: Date.now()});
-            const createdSlam = await slamcard.save();
-            res.status(200).json("Slam Created Successfully");
-        } catch (error) {
-            res.json(error.message);
-        }
-})
+    .post(initialRouteController.createSlam)
+
+router.route('/slambrary')
+    .get(initialRouteController.slambrary)
+    
 
 module.exports = router;

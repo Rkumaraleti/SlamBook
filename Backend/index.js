@@ -34,11 +34,13 @@ db.on('error', (error) => {
 });
 
 //Routes: 
-const homeRoutes = require('./routes/homeRoutes.js')
+const homeRoutes = require('./routes/homeRoutes')
+const slamRoutes = require('./routes/slamRoutes')
 
 const PORT = process.env.PORT;
 
 app.use('/', homeRoutes);
+app.use('/slams', slamRoutes);
 
 app.listen(PORT, () => {
     console.log("Backend is Active")
