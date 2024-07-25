@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.post('/createslam', (req, res) => {
     const params = req.body;
-    res.send(params)
+    console.log(params);
 })
 
 module.exports = router;
