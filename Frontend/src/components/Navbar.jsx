@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="md:flex px-5 py-2 sticky w-full items-center justify-center backdrop-blur justify-between m-auto">
+    <nav className="md:flex px-5 py-2 sticky top-0 w-full items-center backdrop-blur justify-between m-auto">
       <div>
         <p className="flex justify-between nav-title text-lg font-bold hover:underline nav-title">
           <Link to="/">SlamBook</Link>

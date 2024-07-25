@@ -7,9 +7,10 @@ router.get('/', (req, res) => {
 })
 
 
-router.post('/createslam', (req, res) => {
-    const params = req.body;
-    console.log(params);
+router.route('/createslam')
+    .post((req, res) => {
+    const params = req.body[0];
+    console.log(req.body);
 })
 
 module.exports = router;

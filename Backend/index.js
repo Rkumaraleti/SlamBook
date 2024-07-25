@@ -2,6 +2,19 @@
 //Express Config:
 const express = require('express');
 const app = express();
+app.use(express.json()); // <- Express Json to handle json
+
+// cors policy:
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}));
+
+//Body-Parser:
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 //Env File Configuration:
 const dotenv = require('dotenv');
@@ -20,7 +33,7 @@ db.on('error', (error) => {
 });
 
 //Routes: 
-const homeRoutes = require('./routes/homeRoutes')
+const homeRoutes = require('./routes/homeRoutes.js')
 
 const PORT = process.env.PORT;
 
