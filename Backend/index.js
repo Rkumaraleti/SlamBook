@@ -1,13 +1,14 @@
-
 //Express Config:
 const express = require('express');
 const app = express();
 app.use(express.json()); // <- Express Json to handle json
 
+const CLIENT_URL = process.env.CLIENT_URL
+
 // cors policy:
 const cors = require('cors');
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: CLIENT_URL, 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }));
