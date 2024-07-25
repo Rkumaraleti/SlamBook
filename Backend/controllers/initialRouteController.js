@@ -11,7 +11,7 @@ exports.createSlam = async (req, res) => {
         }
 }
     
-exports.slambrary = async(req, res) => {
-        const slamcards = await SlamCard.find({});
+exports.slambrary = async (req, res) => {
+    const slamcards = await SlamCard.find({});
         res.json(slamcards);
 }

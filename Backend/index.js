@@ -5,21 +5,21 @@ app.use(express.json()); // <- Express Json to handle json
 
 const CLIENT_URL = process.env.CLIENT_URL
 
-// cors policy:
-const cors = require('cors');
-app.use(cors({
-    origin: CLIENT_URL, 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}));
-
 //Body-Parser:
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 //Env File Configuration:
 const dotenv = require('dotenv');
-dotenv.config({path: __dirname+'/../.env'});
+dotenv.config({ path: __dirname + '/../.env' });
+
+// cors policy:
+const cors = require('cors');
+app.use(cors({
+    origin: "http://localhost:5173", 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}));
 
 // Mongoose & Mongo:
 const mongoose = require('mongoose');
@@ -40,7 +40,7 @@ const slamRoutes = require('./routes/slamRoutes')
 const PORT = process.env.PORT;
 
 app.use('/', homeRoutes);
-app.use('/slams', slamRoutes);
+app.use('/slam', slamRoutes);
 
 app.listen(PORT, () => {
     console.log("Backend is Active")

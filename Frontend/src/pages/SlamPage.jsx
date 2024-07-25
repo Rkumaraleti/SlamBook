@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function Slam() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const [slamname, setSlamname] = useState("");
 
   const { id } = useParams(); // To fetch params of url
   const slamId = id;
@@ -15,6 +16,7 @@ function Slam() {
     (async () => {
       const slam = await axios.get(`http://localhost:3000/slam/${slamId}`);
       setQuestions(slam.data[0].questions);
+      setSlamname(slam.data[0].slamname);
     })();
   }, [slamId]);
 
@@ -31,7 +33,6 @@ function Slam() {
       questions,
       answers,
     ]);
-    console.log(submit);
     if (submit.data.status == 200) {
       navigate("/");
     } else {
@@ -41,13 +42,16 @@ function Slam() {
 
   return (
     <>
-      <section className="flex min-h-screen items-center justify-center text-center block pt-[50px]">
+      <section className="flex flex-col min-h-screen items-center justify-center text-center block">
+        <div className="text-6xl font-extrabold p-6">
+          <h1>{slamname}</h1>
+        </div>
         <form onSubmit={handleSubmit} className="w-screen">
           <div className="p-5 ">
             {questions.map((question, index) => (
               <div
                 key={index}
-                className="p-3 flex w-screen items-center justify-center"
+                className="p-3 flex w-100 items-center justify-center"
               >
                 <div className="w-[60vw] items-center justify-center">
                   <label

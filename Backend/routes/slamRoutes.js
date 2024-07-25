@@ -9,7 +9,7 @@ const router = express.Router();
 router.route('/:id')
     .get(async (req, res) => {
     const response = await SlamCard.find(
-        {_id: `${req.params.id}`});
+        { _id: `${req.params.id}` });
     res.json(response);
 })
 
