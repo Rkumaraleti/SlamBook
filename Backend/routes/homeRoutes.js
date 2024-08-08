@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     res.send("Backend is Working!!!");
 })
 
-
 router.route('/createslam')
     .post(initialRouteController.createSlam)
 

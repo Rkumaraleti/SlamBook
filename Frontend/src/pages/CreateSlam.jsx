@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 function CreateSlamForm() {
-  const user = true;
+  const user = false;
 
   const [formFields, setformFields] = useState([{ question: "" }]);
   const [slamName, setSlamName] = useState("");

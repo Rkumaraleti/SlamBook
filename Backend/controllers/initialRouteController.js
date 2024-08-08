@@ -1,7 +1,7 @@
 //SlamCard Model
 const SlamCard = require('../models/slamcardModel')
 
-exports.createSlam = async (req, res) => {
+exports.createSlam = async (req, res) => { // <- Needs User Authentication First!!! (Middleware for User Authentication!)
     try {
             const slamcard = new SlamCard({ questions: req.body[0], slamname: req.body[1], createddate: Date.now()});
             const createdSlam = await slamcard.save();
