@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
+import axios from "axios";
 
 const Navbar = () => {
   const user = true;
@@ -11,7 +12,10 @@ const Navbar = () => {
   };
 
   const logout = async () => {
-    console.log("logout");
+    // eslint-disable-next-line no-undef
+    await axios.get(`http://localhost:3000/auth/logout`, {
+      withCredentials: true,
+    });
   };
 
   return (

@@ -33,7 +33,9 @@ const Login = () => {
       "invalid:bg-red-500/30",
       "invalid:focus:border-red-500"
     );
-    const res = await axios.post(`http://localhost:3000/auth/login`, formData);
+    const res = await axios.post(`http://localhost:3000/auth/login`, formData, {
+      withCredentials: true,
+    });
     console.log(res.data);
     Navigate("/");
   };

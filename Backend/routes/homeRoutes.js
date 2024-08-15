@@ -6,7 +6,8 @@ const initialRouteController = require('../controllers/initialRouteController')
 
 
 router.get('/', (req, res) => {
-    res.send("Backend is Working!!!");
+    console.log(req.user);
+    res.json("Backend is Working!!!");
 })
 
 router.route('/createslam')

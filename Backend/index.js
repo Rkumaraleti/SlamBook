@@ -43,6 +43,7 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, collectionName: "sessions" }),
     cookie: {
+        secure: false,
         maxAge: 1000 * 60 * 60 * 24, //One Day
     }
 }));
@@ -57,40 +58,57 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
-}, async function (username, password, done) {
-    const user = await UserModel.findOne({ email: username });
-    if (!user) { return done(null, false) };
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) { return done(null, false) };
-    return done(null, user);
-}
-))
+}, async (username, password, done) => {
+    try {
+        const user = await UserModel.findOne({ email: username });
+        if (!user) {
+            return done(null, false, { message: 'Incorrect username' });
+        }
+        const isMatch = bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return done(null, false, { message: 'Incorrect password' });
+        }
+        return done(null, user);
+    } catch (err) {
+        return done(err);
+    }
+}));
 
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
     done(null, user.id); 
 });
 
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await UserModel.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
 });
 
-//Routes: 
+// Requiring Routes: 
 const homeRoutes = require('./routes/homeRoutes')
 const slamRoutes = require('./routes/slamRoutes')
 const authRoutes = require('./routes/authRoutes');
 
 const PORT = process.env.PORT;
 
+// Routes:
 app.use('/', homeRoutes);
 app.use('/slam', slamRoutes);
 app.use('/auth', authRoutes);
+
+app.use('*', (err, req, res, next) => {
+    if (err) { res.json({ err }) };
+    next();
+})
 
 app.listen(PORT, () => {
     console.log("Backend is Active")
