@@ -2,6 +2,9 @@ const express = require('express');
 const SlamCard = require('../models/slamcardModel')
 const Slam = require('../models/slamModel');
 
+//Middleware:
+const { isLoggedIn } = require('../middlewares/middlware');
+
 
 const router = express.Router();
 
@@ -15,7 +18,7 @@ router.route('/:id')
 
 // To catch Responses of slam:
 router.route('/:id')
-    .post(async (req, res) => {
+    .post(isLoggedIn, async (req, res) => {
         const { id } = req.params;
         // Here slam is created and also the slamcard gets updated by slam response
         try {

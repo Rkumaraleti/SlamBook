@@ -38,7 +38,9 @@ function CreateSlamForm() {
       setformFields([{ question: "" }]);
     };
     // eslint-disable-next-line no-dupe-keys
-    axios.post("http://localhost:3000/createslam", [formFields, slamName]);
+    axios.post("http://localhost:3000/createslam", [formFields, slamName], {
+      withCredentials: true,
+    });
     clearState();
   };
 

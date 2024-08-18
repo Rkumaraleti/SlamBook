@@ -106,7 +106,7 @@ app.use('/slam', slamRoutes);
 app.use('/auth', authRoutes);
 
 app.use('*', (err, req, res, next) => {
-    if (err) { res.json({ err }) };
+    if (err) { res.json({ err: err }) };
     next();
 })
 

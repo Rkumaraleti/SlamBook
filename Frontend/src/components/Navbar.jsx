@@ -13,13 +13,14 @@ const Navbar = () => {
 
   const logout = async () => {
     // eslint-disable-next-line no-undef
-    await axios.get(`http://localhost:3000/auth/logout`, {
+    const res = await axios.get(`http://localhost:3000/auth/logout`, {
       withCredentials: true,
     });
+    console.log(res.data);
   };
 
   return (
-    <nav className="md:flex px-5 py-2 sticky top-0 w-full items-center backdrop-blur justify-between m-auto">
+    <nav className="md:flex px-5 py-2 sticky top-0 w-full items-center backdrop-blur justify-between m-auto z-20">
       <div>
         <p className="flex justify-between nav-title text-lg font-bold hover:underline nav-title">
           <Link to="/">SlamBook</Link>
@@ -67,7 +68,7 @@ const Navbar = () => {
             <CustomButton
               text="Signup"
               buttonStyle={"bg-yellow-400 hover:bg-yellow-300 nav-elements"}
-              routeTo={"/login"}
+              routeTo={"/register"}
             />
           </>
         )}
