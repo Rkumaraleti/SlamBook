@@ -7,7 +7,9 @@ const Slambrary = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://localhost:3000/slambrary");
+      const res = await axios.get("http://localhost:3000/slambrary", {
+        withCredentials: true,
+      });
       setslams(res.data);
     };
     fetch();

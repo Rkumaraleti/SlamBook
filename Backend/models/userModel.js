@@ -17,7 +17,15 @@ const userSchema = new Schema({
     password: {
       type: String,
       
-    }
+  },
+  premiun: {
+    type: Boolean,
+    default: false
+  },
+  slamcards: [{
+      type: Schema.Types.ObjectId,
+      ref: 'SlamCard'
+    }]
 })
 
 userSchema.pre('save', function (next) {

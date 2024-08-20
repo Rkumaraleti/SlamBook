@@ -1,5 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages:
 import Home from "./pages/Home";
 import CreateSlam from "./pages/CreateSlam";
 import Slambrary from "./pages/Slambrary";

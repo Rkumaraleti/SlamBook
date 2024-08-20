@@ -16,6 +16,15 @@ router.post("/login", passport.authenticate('local', {
     res.json("User Succesfully Logged in!!!");
 });
 
+router.get('/user', (req, res, next) => {
+  if (req.user) {
+    res.json(req.user)
+  } else {
+    next("User Not Logged in!");
+  }
+  
+})
+
 router.get('/logout', (req, res) => {
   req.logout((err) => {
     if (err) { 

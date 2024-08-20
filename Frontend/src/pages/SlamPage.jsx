@@ -29,10 +29,11 @@ function Slam() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // eslint-disable-next-line no-dupe-keys
-    const submit = await axios.post(`http://localhost:3000/slam/${slamId}`, [
-      questions,
-      answers,
-    ]);
+    const submit = await axios.post(
+      `http://localhost:3000/slam/${slamId}`,
+      [questions, answers],
+      { withCredentials: true }
+    );
     if (submit.data.status == 200) {
       navigate("/");
     } else {
