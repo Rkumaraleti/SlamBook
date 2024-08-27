@@ -8,21 +8,38 @@ import Slambrary from "./pages/Slambrary";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import SlamPage from "./pages/SlamPage";
+import Page404 from "./pages/Page404";
+import Error from "./pages/Error";
+import Profile from "./pages/Profile";
+
+// Context:
+import { AuthProvider } from "./context/authContext";
+
+// Components:
 import Navbar from "./components/Navbar";
+
+// Error Handling:
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/createslam" element={<CreateSlam />} />
-        <Route path="/slambrary" element={<Slambrary />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/slam/:id" element={<SlamPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary fallback={Error}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/createslam" element={<CreateSlam />} />
+            <Route path="/slambrary" element={<Slambrary />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/slam/:id" element={<SlamPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<Page404 />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

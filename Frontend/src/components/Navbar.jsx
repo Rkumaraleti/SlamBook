@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
-import axios from "axios";
+// import axios from "axios";
+
+// Context:
+import { useAuth } from "../context/authContext";
 
 const Navbar = () => {
-  const user = true;
+  const { user, logout } = useAuth();
+
   const hamBurger = () => {
     const menu1 = document.getElementById("hamBurger-menu-list");
     const menu2 = document.getElementById("hamBurger-menu-buttons");
@@ -11,13 +15,13 @@ const Navbar = () => {
     menu2.classList.toggle("hidden");
   };
 
-  const logout = async () => {
-    // eslint-disable-next-line no-undef
-    const res = await axios.get(`http://localhost:3000/auth/logout`, {
-      withCredentials: true,
-    });
-    console.log(res.data);
-  };
+  // const logout = async () => {
+  //   // eslint-disable-next-line no-undef
+  //   const res = await axios.get(`http://localhost:3000/auth/logout`, {
+  //     withCredentials: true,
+  //   });
+  //   console.log(res.data);
+  // };
 
   return (
     <nav className="md:flex px-5 py-2 sticky top-0 w-full items-center backdrop-blur justify-between m-auto z-20">

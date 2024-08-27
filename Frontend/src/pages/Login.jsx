@@ -7,7 +7,12 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+// Context:
+import { useAuth } from "../context/authContext";
+
 const Login = () => {
+  const { login } = useAuth();
+
   const [formData, setFormData] = useState({ email: "", password: "" });
 
   const Navigate = useNavigate();
@@ -36,7 +41,10 @@ const Login = () => {
     const res = await axios.post(`http://localhost:3000/auth/login`, formData, {
       withCredentials: true,
     });
-    console.log(res.data);
+    if (res.data.message) {
+      return;
+    }
+    login(res.data);
     Navigate("/");
   };
 

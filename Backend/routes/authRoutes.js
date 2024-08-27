@@ -12,8 +12,9 @@ router.get('/login/failure', (req, res, next) => {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/auth/login/failure'
-}), (req, res) => {
-    res.json("User Succesfully Logged in!!!");
+}), (req, res, err) => {
+
+  res.json(req.user);
 });
 
 router.get('/user', (req, res, next) => {
