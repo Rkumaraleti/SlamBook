@@ -2,10 +2,14 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
+import { useAuth } from "../context/authContext";
+
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 function CreateSlamForm() {
-  const user = true;
+  const { user } = useAuth();
 
   const [formFields, setformFields] = useState([{ question: "" }]);
   const [slamName, setSlamName] = useState("");
@@ -46,7 +50,9 @@ function CreateSlamForm() {
 
   return (
     <>
-      {!user && <Navigate to="/login" />}
+      {!user && toast.warning("Login to Create Slam") && (
+        <Navigate to="/login" />
+      )}
       <section className="flex min-h-screen items-center justify-center text-center block w-[90vw] m-auto">
         <form onSubmit={handleSubmit} className="w-screen">
           <div className="p-5">

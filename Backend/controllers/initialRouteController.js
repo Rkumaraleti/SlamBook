@@ -7,9 +7,9 @@ exports.createSlam = async (req, res) => { // <- Needs User Authentication First
         const slamcard = new SlamCard({ questions: req.body[0], slamname: req.body[1], createddate: Date.now()});
         const createdSlam = await slamcard.save();
         const pushSlam = await User.findOneAndUpdate({ _id: req.user.id }, { $push: { slamcards: createdSlam._id } });
-        res.status(200).json("Slam Created Successfully");
+        res.status(200).json({message: "Slam Created Successfully"});
     } catch (error) {
-        res.json(error.message);
+        res.json({error: error.message});
     }
 }
     

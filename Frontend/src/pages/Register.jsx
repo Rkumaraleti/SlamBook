@@ -3,7 +3,12 @@ import axios from "axios";
 
 import { useState } from "react";
 
+import { toast } from "react-toastify";
+
 import CustomButton from "../components/CustomButton";
+
+// Navigate:
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +17,8 @@ const Register = () => {
     username: "",
   });
 
+  const Navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -19,7 +26,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     const usernameValidation = document.getElementById("username");
     const emailValidation = document.getElementById("email");
     const passwordValidation = document.getElementById("password");
@@ -41,7 +47,13 @@ const Register = () => {
       "invalid:bg-red-500/30",
       "invalid:focus:border-red-500"
     );
-    await axios.post(`http://localhost:3000/auth/register`, formData);
+
+    const res = await axios.post(
+      `http://localhost:3000/auth/register`,
+      formData
+    );
+    toast(res.data.message);
+    Navigate("/");
   };
 
   return (

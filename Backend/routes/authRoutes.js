@@ -13,27 +13,16 @@ router.get('/login/failure', (req, res, next) => {
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/auth/login/failure'
 }), (req, res, err) => {
-
-  res.json(req.user);
+  return res.status(200).json({user: req.user, message: "Logged in Successfully!"});
 });
-
-router.get('/user', (req, res, next) => {
-  if (req.user) {
-    res.json(req.user)
-  } else {
-    next("User Not Logged in!");
-  }
-  
-})
 
 router.get('/logout', (req, res) => {
   req.logout((err) => {
     if (err) { 
       console.error(err); 
-      return res.status(500).send('Error logging out');
+      return res.status(500).json({ error: 'User Can\'t be Logged Out!' });
     }
-
-    res.json("Logged Out Successfully!"); 
+    return res.status(200).json({ message: "Logged Out Successfully!" }); 
   });
 });
 

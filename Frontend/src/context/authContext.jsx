@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -13,10 +15,21 @@ const AuthProvider = ({ children }) => {
     setUser(u);
   }, [user]);
 
-  const login = (userData) => {
+  const login = (userData, message) => {
     const user = JSON.stringify(userData);
+    // const resMessage = JSON.stringify(message);
     localStorage.setItem("user", user);
     setUser(localStorage.getItem("user"));
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   const logout = async () => {
@@ -25,9 +38,20 @@ const AuthProvider = ({ children }) => {
     const res = await axios.get(`http://localhost:3000/auth/logout`, {
       withCredentials: true,
     });
-    console.log(res);
+
     localStorage.removeItem("user");
     setUser(null);
+    toast.success(res.data.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    return res;
   };
 
   return (

@@ -41,10 +41,7 @@ const Login = () => {
     const res = await axios.post(`http://localhost:3000/auth/login`, formData, {
       withCredentials: true,
     });
-    if (res.data.message) {
-      return;
-    }
-    login(res.data);
+    login(res.data.user, res.data.message);
     Navigate("/");
   };
 
