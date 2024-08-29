@@ -10,7 +10,11 @@ import CustomButton from "../components/CustomButton";
 // Navigate:
 import { useNavigate } from "react-router-dom";
 
+// Context:
+import { useAuth } from "../context/authContext";
+
 const Register = () => {
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -52,7 +56,8 @@ const Register = () => {
       `http://localhost:3000/auth/register`,
       formData
     );
-    toast(res.data.message);
+    toast.info(res.data.message);
+    login(res.data.user);
     Navigate("/");
   };
 

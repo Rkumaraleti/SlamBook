@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
         req.login(isUserFound, () => {
             return;
         });
-        return res.json({ message: 'User Already Exist!' });
+        return res.json({ message: 'User Already Exist!', toastType: 'info',user: isUserFound });
     }
     const user = new User({ email, username, password });
     const savedUser = await user.save();
