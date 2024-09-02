@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 // Context:
 import { useAuth } from "../context/authContext";
 
+// Toaster:
+import { toast } from "react-toastify";
+
 const Login = () => {
   const { login } = useAuth();
 
@@ -38,11 +41,20 @@ const Login = () => {
       "invalid:bg-red-500/30",
       "invalid:focus:border-red-500"
     );
-    const res = await axios.post(`http://localhost:3000/auth/login`, formData, {
-      withCredentials: true,
-    });
-    login(res.data.user, res.data.message);
-    Navigate("/");
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/auth/login`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      login(res.data.user, res.data.message);
+      Navigate("/");
+    } catch (err) {
+      toast.error(err.response.data.message);
+      Navigate("/login");
+    }
   };
 
   return (

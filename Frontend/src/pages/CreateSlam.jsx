@@ -41,11 +41,14 @@ function CreateSlamForm() {
       setSlamName("");
       setformFields([{ question: "" }]);
     };
-    // eslint-disable-next-line no-dupe-keys
-    axios.post("http://localhost:3000/createslam", [formFields, slamName], {
-      withCredentials: true,
-    });
-    clearState();
+    try {
+      axios.post("http://localhost:3000/createslam", [formFields, slamName], {
+        withCredentials: true,
+      });
+      clearState();
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
   };
 
   return (

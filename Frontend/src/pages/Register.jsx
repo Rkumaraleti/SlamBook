@@ -10,11 +10,7 @@ import CustomButton from "../components/CustomButton";
 // Navigate:
 import { useNavigate } from "react-router-dom";
 
-// Context:
-import { useAuth } from "../context/authContext";
-
 const Register = () => {
-  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -52,13 +48,17 @@ const Register = () => {
       "invalid:focus:border-red-500"
     );
 
-    const res = await axios.post(
-      `http://localhost:3000/auth/register`,
-      formData
-    );
-    toast.info(res.data.message);
-    login(res.data.user);
-    Navigate("/");
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/auth/register`,
+        formData
+      );
+      toast.success(res.data.message);
+      Navigate("/");
+    } catch (err) {
+      toast.info(err.response.data.message);
+      Navigate("/login");
+    }
   };
 
   return (

@@ -4,10 +4,7 @@ exports.register = async (req, res) => {
     const { email, username, password } = req.body; 
     const isUserFound = await User.findOne({ email: req.body.email });
     if (isUserFound) {
-        req.login(isUserFound, () => {
-            return;
-        });
-        return res.json({ message: 'User Already Exist!', toastType: 'info',user: isUserFound });
+        return res.status(400).json({ message: 'User Already Exist!'});
     }
     const user = new User({ email, username, password });
     const savedUser = await user.save();

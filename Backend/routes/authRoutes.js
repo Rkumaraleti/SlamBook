@@ -7,7 +7,7 @@ const router = express.Router();
 const passport = require('passport');
 
 router.get('/login/failure', (req, res, next) => {
-    res.json({ message: 'Error!'})
+    return res.status(400).json({ message: 'Invalid Credentials!'})
 })
 
 router.post("/login", passport.authenticate('local', {
