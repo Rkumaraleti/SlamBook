@@ -1,6 +1,5 @@
 /* eslint-disable no-dupe-keys */
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 import { useAuth } from "../context/authContext";
 
@@ -41,6 +40,10 @@ function CreateSlamForm() {
       setSlamName("");
       setformFields([{ question: "" }]);
     };
+    if (!user) {
+      toast.warn("Login to submit the form");
+      return;
+    }
     try {
       axios.post("http://localhost:3000/createslam", [formFields, slamName], {
         withCredentials: true,
@@ -53,9 +56,6 @@ function CreateSlamForm() {
 
   return (
     <>
-      {!user && toast.warning("Login to Create Slam") && (
-        <Navigate to="/login" />
-      )}
       <section className="flex min-h-screen items-center justify-center text-center block w-[90vw] m-auto">
         <form onSubmit={handleSubmit} className="w-screen">
           <div className="p-5">
@@ -67,7 +67,7 @@ function CreateSlamForm() {
                   name="slamname"
                   onChange={(e) => handleSlamName(e)}
                   required
-                  className="m-3 w-[80vw] focus:outline-none text-center gsap-form-inpu text-4xl font-bold gsap-title"
+                  className="m-3 w-[80vw] focus:outline-none text-center gsap-form-inpu text-xl md:text-4xl font-bold gsap-title"
                   autoFocus
                 />
               </div>

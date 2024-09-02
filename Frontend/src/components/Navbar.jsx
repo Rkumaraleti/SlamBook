@@ -15,13 +15,12 @@ const Navbar = () => {
     menu2.classList.toggle("hidden");
   };
 
-  // const logout = async () => {
-  //   // eslint-disable-next-line no-undef
-  //   const res = await axios.get(`http://localhost:3000/auth/logout`, {
-  //     withCredentials: true,
-  //   });
-  //   console.log(res.data);
-  // };
+  const toggleNav = () => {
+    const menu1 = document.getElementById("hamBurger-menu-list");
+    const menu2 = document.getElementById("hamBurger-menu-buttons");
+    menu1.classList.toggle("hidden");
+    menu2.classList.toggle("hidden");
+  };
 
   return (
     <nav className="md:flex px-5 py-2 sticky top-0 w-full items-center backdrop-blur justify-between m-auto z-20">
@@ -40,6 +39,7 @@ const Navbar = () => {
               text="Home"
               buttonStyle={"hover:bg-cyan-400 nav-elements"}
               routeTo={"/"}
+              onClick={toggleNav}
             />
           </li>
           <li>
@@ -47,6 +47,7 @@ const Navbar = () => {
               text="Create Slam"
               buttonStyle={"hover:bg-yellow-400 nav-elements"}
               routeTo={"/createslam"}
+              onClick={toggleNav}
             />
           </li>
           <li>
@@ -54,6 +55,7 @@ const Navbar = () => {
               text="Pricing"
               buttonStyle={"hover:bg-cyan-400 nav-elements"}
               routeTo={"/"}
+              onClick={toggleNav}
             />
           </li>
         </ul>
@@ -68,11 +70,13 @@ const Navbar = () => {
               text="Login"
               buttonStyle={"bg-cyan-400 hover:bg-cyan-300 nav-elements"}
               routeTo={"/login"}
+              onClick={toggleNav}
             />
             <CustomButton
               text="Signup"
               buttonStyle={"bg-yellow-400 hover:bg-yellow-300 nav-elements"}
               routeTo={"/register"}
+              onClick={toggleNav}
             />
           </>
         )}
@@ -83,12 +87,16 @@ const Navbar = () => {
               text="Slambrary"
               buttonStyle={"bg-cyan-400 hover:bg-cyan-300 nav-elements"}
               routeTo={"/slambrary"}
+              onClick={toggleNav}
             />
             <CustomButton
               text="Sign out"
               buttonStyle={"bg-yellow-400 hover:bg-yellow-300 nav-elements"}
               routeTo={"/"}
-              onClick={logout}
+              onClick={() => {
+                logout();
+                toggleNav();
+              }}
             />
           </>
         )}
