@@ -1,5 +1,7 @@
 import CustomButton from "../components/CustomButton";
 
+import Pricing from "./Pricing";
+
 const Home = () => {
   return (
     <>
@@ -19,6 +21,11 @@ const Home = () => {
             routeTo={"/createslam"}
           />
         </div>
+      </section>
+      <section>
+        <Pricing
+          backgroundStyle={"bg-gradient-to-b from-cyan-500 to-transparent"}
+        />
       </section>
     </>
   );

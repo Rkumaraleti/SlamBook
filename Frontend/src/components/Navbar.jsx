@@ -54,7 +54,7 @@ const Navbar = () => {
             <CustomButton
               text="Pricing"
               buttonStyle={"hover:bg-cyan-400 nav-elements"}
-              routeTo={"/"}
+              routeTo={"/pricing"}
               onClick={toggleNav}
             />
           </li>

@@ -50,7 +50,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/auth/register`,
+        `${import.meta.env.VITE_SERVER_URL}/auth/register`,
         formData
       );
       toast.success(res.data.message);

@@ -41,13 +41,17 @@ function CreateSlamForm() {
       setformFields([{ question: "" }]);
     };
     if (!user) {
-      toast.warn("Login to submit the form");
+      toast.warn("Login to create slam");
       return;
     }
     try {
-      axios.post("http://localhost:3000/createslam", [formFields, slamName], {
-        withCredentials: true,
-      });
+      axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/createslam`,
+        [formFields, slamName],
+        {
+          withCredentials: true,
+        }
+      );
       clearState();
     } catch (err) {
       toast.error(err.response.data.message);

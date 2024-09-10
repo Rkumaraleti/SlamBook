@@ -35,9 +35,12 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     // Perform logout logic
     // ...
-    const res = await axios.get(`http://localhost:3000/auth/logout`, {
-      withCredentials: true,
-    });
+    const res = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/auth/logout`,
+      {
+        withCredentials: true,
+      }
+    );
 
     localStorage.removeItem("user");
     setUser(null);

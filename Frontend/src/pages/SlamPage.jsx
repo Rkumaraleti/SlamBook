@@ -2,7 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+//Context:
+import { useAuth } from "../context/authContext";
+
+// Toaster:
+import { toast } from "react-toastify";
+
 function Slam() {
+  const { user } = useAuth();
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [slamname, setSlamname] = useState("");
@@ -10,11 +18,13 @@ function Slam() {
   const { id } = useParams(); // To fetch params of url
   const slamId = id;
 
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const slam = await axios.get(`http://localhost:3000/slam/${slamId}`);
+      const slam = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`
+      );
       setQuestions(slam.data[0].questions);
       setSlamname(slam.data[0].slamname);
     })();
@@ -30,14 +40,18 @@ function Slam() {
     event.preventDefault();
     // eslint-disable-next-line no-dupe-keys
     const submit = await axios.post(
-      `http://localhost:3000/slam/${slamId}`,
+      `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`,
       [questions, answers],
       { withCredentials: true }
     );
+    if (!user) {
+      toast.warn("Login to submit the slam response");
+      Navigate("/login");
+    }
     if (submit.data.status == 200) {
-      navigate("/");
+      Navigate("/");
     } else {
-      navigate("/error");
+      Navigate("/error");
     }
   };
 

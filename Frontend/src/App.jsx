@@ -11,6 +11,7 @@ import SlamPage from "./pages/SlamPage";
 import Page404 from "./pages/Page404";
 import Error from "./pages/Error";
 import Profile from "./pages/Profile";
+import Pricing from "./pages/Pricing";
 
 // Context:
 import { AuthProvider } from "./context/authContext";
@@ -30,6 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/createslam" element={<CreateSlam />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/slambrary" element={<Slambrary />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
