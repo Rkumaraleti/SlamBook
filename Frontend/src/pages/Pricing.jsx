@@ -44,7 +44,7 @@ const Pricing = ({ backgroundStyle }) => {
             <div className="px-6 py-4">
               <div className="font-bold text-3xl mb-2">₹30/slam</div>
               <p className="text-gray-700 text-base">
-                More Friends? No Problem, but new slam forever.
+                More Friends? No Problem, buy new slam forever.
               </p>
             </div>
           </div>

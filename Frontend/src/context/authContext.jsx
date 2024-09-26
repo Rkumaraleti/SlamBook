@@ -11,15 +11,15 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const u = localStorage.getItem("user");
+    const u = sessionStorage.getItem("user");
     setUser(u);
   }, [user]);
 
   const login = (userData, message) => {
     const user = JSON.stringify(userData);
     // const resMessage = JSON.stringify(message);
-    localStorage.setItem("user", user);
-    setUser(localStorage.getItem("user"));
+    sessionStorage.setItem("user", user);
+    setUser(sessionStorage.getItem("user"));
     toast.success(message, {
       position: "top-right",
       autoClose: 5000,
@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
       }
     );
 
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
     setUser(null);
     toast.success(res.data.message, {
       position: "top-right",

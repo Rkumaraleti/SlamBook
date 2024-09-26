@@ -84,9 +84,9 @@ const Navbar = () => {
         {user && (
           <>
             <CustomButton
-              text="Slambrary"
+              text="Profile"
               buttonStyle={"bg-cyan-400 hover:bg-cyan-300 nav-elements"}
-              routeTo={"/slambrary"}
+              routeTo={"/profile"}
               onClick={toggleNav}
             />
             <CustomButton
