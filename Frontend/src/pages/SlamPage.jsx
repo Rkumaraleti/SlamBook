@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 
 function Slam() {
   const { user } = useAuth();
-
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [slamname, setSlamname] = useState("");
@@ -81,7 +80,7 @@ function Slam() {
                     name={"question" + index}
                     onChange={(e) => handleTodoChange(e, index)}
                     required
-                    className="m-2 w-[60vw] border-b-2 focus:border-black focus:outline-none text-center gsap-form-input"
+                    className={`m-2 w-[60vw] border-b-2 focus:border-black focus:outline-none text-center gsap-form-input}`}
                   />
                 </div>
               </div>

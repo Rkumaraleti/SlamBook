@@ -24,6 +24,7 @@ const Home = () => {
       </section>
       <section>
         <Pricing
+          marginTop={"mt-0"}
           backgroundStyle={"bg-gradient-to-b from-cyan-500 to-transparent"}
         />
       </section>

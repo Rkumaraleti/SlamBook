@@ -4,12 +4,18 @@ const User = require('../models/userModel');
 
 exports.createSlam = async (req, res) => { // <- Needs User Authentication First!!! (Middleware for User Authentication!)
     try {
-        const slamcard = new SlamCard({ questions: req.body[0], slamname: req.body[1], createddate: Date.now()});
-        const createdSlam = await slamcard.save();
-        const pushSlam = await User.findOneAndUpdate({ _id: req.user.id }, { $push: { slamcards: createdSlam._id } });
-        res.status(200).json({message: "Slam Created Successfully"});
+        if (req.user.premium || (!req.user.premium && req.user.slamcards.length < 1)) {
+            const slamcard = new SlamCard({ questions: req.body[0], slamname: req.body[1], createddate: Date.now()});
+            const createdSlam = await slamcard.save();
+            const pushSlam = await User.findOneAndUpdate({ _id: req.user.id }, { $push: { slamcards: createdSlam._id } });
+            return res.status(200).json({message: "Slam Created Successfully"});
+        } 
+        else {
+            return res.status(400).json({ message: "Get Premium for new Slam!" });
+        }
+        
     } catch (error) {
-        res.json({error: error.message});
+        return res.json({error: error.message});
     }
 }
     

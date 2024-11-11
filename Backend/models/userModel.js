@@ -18,7 +18,7 @@ const userSchema = new Schema({
       type: String,
       
   },
-  premiun: {
+  premium: {
     type: Boolean,
     default: false
   },

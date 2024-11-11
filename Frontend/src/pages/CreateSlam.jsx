@@ -6,9 +6,12 @@ import { useAuth } from "../context/authContext";
 import axios from "axios";
 
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CreateSlamForm() {
   const { user } = useAuth();
+
+  const Navigate = useNavigate();
 
   const [formFields, setformFields] = useState([{ question: "" }]);
   const [slamName, setSlamName] = useState("");
@@ -34,7 +37,7 @@ function CreateSlamForm() {
     setformFields(newformFields);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const clearState = () => {
       setSlamName("");
@@ -45,22 +48,26 @@ function CreateSlamForm() {
       return;
     }
     try {
-      axios.post(
+      const res = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/createslam`,
         [formFields, slamName],
         {
           withCredentials: true,
         }
       );
+      toast.success(res.data.message);
       clearState();
     } catch (err) {
       toast.error(err.response.data.message);
+      Navigate("/pricing");
     }
   };
 
   return (
     <>
-      <section className="flex min-h-screen items-center justify-center text-center block w-[90vw] m-auto">
+      <section
+        className={`flex min-h-screen items-center justify-center text-center block w-[90vw] m-auto`}
+      >
         <form onSubmit={handleSubmit} className="w-screen">
           <div className="p-5">
             <div className="p-3 flex w-screen justify-center">
