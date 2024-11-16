@@ -1,6 +1,4 @@
-const express = require('express');
-const SlamCard = require('../models/slamcardModel')
-const Slam = require('../models/slamModel');
+const express = require('express');;
 
 //Middleware:
 const { isLoggedIn } = require('../middlewares/middlware');
@@ -10,6 +8,10 @@ const slamRouteController = require('../controllers/slamRouteController');
 
 
 const router = express.Router();
+
+// To Edit Slam
+router.route('/:id/editslam')
+    .post(isLoggedIn, slamRouteController.editSlam);
 
 // To Load Questions of slam from slamcard:
 router.route('/:id')

@@ -21,6 +21,7 @@ import Navbar from "./components/Navbar";
 
 // Error Handling:
 import ErrorBoundary from "./components/ErrorBoundary";
+import EditSlam from "./pages/EditSlam";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/slam/:id" element={<SlamPage />} />
+            <Route path="/editslam/:id" element={<EditSlam />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Page404 />} />
           </Routes>
