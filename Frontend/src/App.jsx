@@ -12,6 +12,7 @@ import Page404 from "./pages/Page404";
 import Error from "./pages/Error";
 import Profile from "./pages/Profile";
 import Pricing from "./pages/Pricing";
+import EditSlam from "./pages/EditSlam";
 
 // Context:
 import { AuthProvider } from "./context/authContext";
@@ -21,7 +22,8 @@ import Navbar from "./components/Navbar";
 
 // Error Handling:
 import ErrorBoundary from "./components/ErrorBoundary";
-import EditSlam from "./pages/EditSlam";
+import SlamResponses from "./pages/SlamResponses";
+import SlamResponsePage from "./pages/SlamResponsePage";
 
 function App() {
   return (
@@ -36,8 +38,10 @@ function App() {
             <Route path="/slambrary" element={<Slambrary />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/slam/:id/showslam" element={<SlamResponsePage />} />
             <Route path="/slam/:id" element={<SlamPage />} />
             <Route path="/editslam/:id" element={<EditSlam />} />
+            <Route path="/slamresponses/:id" element={<SlamResponses />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Page404 />} />
           </Routes>

@@ -38,15 +38,19 @@ function Slam() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // eslint-disable-next-line no-dupe-keys
-    const submit = await axios.post(
-      `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`,
-      [questions, answers],
-      { withCredentials: true }
-    );
+
+    let theuser = JSON.parse(user);
+
     if (!user) {
       toast.warn("Login to submit the slam response");
       Navigate("/login");
     }
+
+    const submit = await axios.post(
+      `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`,
+      [questions, answers, theuser._id],
+      { withCredentials: true }
+    );
     if (submit.data.status == 200) {
       Navigate("/");
     } else {

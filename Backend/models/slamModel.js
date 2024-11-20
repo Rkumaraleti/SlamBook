@@ -9,7 +9,14 @@ const slamsSchema = new Schema({
     answers: [{
         type: String,
         required: true
-    }]
+    }],
+    answersOwnedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        unique:true,
+        required: true
+    }
 })
+
 
 module.exports = mongoose.model('Slams', slamsSchema);

@@ -15,6 +15,11 @@ const slamCardSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Slams'
     }],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createddate: {
         type: Date,
         required: true

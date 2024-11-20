@@ -4,11 +4,11 @@ import CustomButton from "../components/CustomButton";
 const Pricing = ({ backgroundStyle, marginTop }) => {
   return (
     <section
-      className={`w-screen min-h-screen flex justify-center items-center  ${
+      className={`w-screen min-h-screen flex justify-center items-center ${
         backgroundStyle
           ? backgroundStyle
           : "bg-gradient-to-t from-amber-500 to-transparent"
-      } ${marginTop ? marginTop : "mt-[1.2rem]"}`}
+      } ${marginTop ? marginTop : "mt-[3rem]"}`}
     >
       <div id="title" className="text-center">
         <div className="" id="title-text">
