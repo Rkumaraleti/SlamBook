@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+const {body} = require('express-validator')
+
 //Middlware:
 const { isLoggedIn } = require('../middlewares/middlware');
 
 // Controller:
-const initialRouteController = require('../controllers/initialRouteController')
+const initialRouteController = require('../controllers/initialRouteController');
 
 
 router.get('/', (req, res) => {
-    console.log(req.user);
     res.json("Backend is Working!!!");
 })
 

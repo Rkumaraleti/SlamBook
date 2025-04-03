@@ -8,3 +8,7 @@ exports.isLoggedIn = (req, res, next) => {
     }
     
 }
+
+exports.HandleValidationError = (req, res, next) => {
+    
+}

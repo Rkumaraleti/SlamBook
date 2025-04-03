@@ -2,6 +2,7 @@
 const authRouteController = require('../controllers/authRouteController')
 
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
 const passport = require('passport');
@@ -12,8 +13,12 @@ router.get('/login/failure', (req, res, next) => {
 
 router.post("/login", passport.authenticate('local', {
     failureRedirect: '/auth/login/failure'
-}), (req, res, err) => {
-  return res.status(200).json({user: req.user, message: "Logged in Successfully!"});
+}), body('email').trim().isEmail(), (req, res, err) => {
+  const result = validationResult(req);
+  if (result.isEmpty()) {
+    return res.status(200).json({user: req.user, message: "Logged in Successfully!"});
+  }
+  return res.status(400).json({ message: result.array()[0].msg });
 });
 
 router.get('/logout', (req, res) => {

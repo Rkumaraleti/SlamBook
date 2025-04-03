@@ -1,4 +1,5 @@
 const express = require('express');;
+const { body } = require('express-validator');
 
 //Middleware:
 const { isLoggedIn } = require('../middlewares/middlware');
@@ -9,11 +10,11 @@ const slamRouteController = require('../controllers/slamRouteController');
 
 const router = express.Router();
 
-// To Edit Slam
+// To Edit Slam:
 router.route('/:id/editslam')
     .post(isLoggedIn, slamRouteController.editSlam);
 
-// To Edit Slam
+// To See Responses of Slam:
 router.route('/:id/slamresponses')
     .get(isLoggedIn, slamRouteController.slamResponseShow);
 

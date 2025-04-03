@@ -5,7 +5,10 @@ const CustomButton = ({ text, routeTo, buttonStyle, type, onClick }) => {
     <Link to={routeTo}>
       <button
         type={type ? type : "text"}
-        className={"p-3 m-1 rounded-3xl hover:shadow-xl " + buttonStyle}
+        className={
+          "p-3 m-1 rounded-3xl hover:shadow-xl border border-black " +
+          buttonStyle
+        }
         onClick={onClick}
       >
         {text}

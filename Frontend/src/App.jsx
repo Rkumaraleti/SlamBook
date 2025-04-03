@@ -13,6 +13,8 @@ import Error from "./pages/Error";
 import Profile from "./pages/Profile";
 import Pricing from "./pages/Pricing";
 import EditSlam from "./pages/EditSlam";
+import SlamResponses from "./pages/SlamResponses";
+import SlamResponsePage from "./pages/SlamResponsePage";
 
 // Context:
 import { AuthProvider } from "./context/authContext";
@@ -22,8 +24,6 @@ import Navbar from "./components/Navbar";
 
 // Error Handling:
 import ErrorBoundary from "./components/ErrorBoundary";
-import SlamResponses from "./pages/SlamResponses";
-import SlamResponsePage from "./pages/SlamResponsePage";
 
 function App() {
   return (
