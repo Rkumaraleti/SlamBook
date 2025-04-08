@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
 // import axios from "axios";
 
-// Context:
-import { useAuth } from "../context/authContext";
-
 const Navbar = () => {
   const { user, logout } = useAuth();
 

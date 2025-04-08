@@ -31,23 +31,6 @@ db.on('error', (error) => {
     console.error('MongoDB connection error:', error);
 });
 
-// Session:
-const session = require('express-session');
-
-// Mongo Store:
-const MongoStore = require('connect-mongo');
-
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL, collectionName: "sessions" }),
-    cookie: {
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24, //One Day
-    }
-}));
-
 // Models:
 const UserModel = require('./models/userModel');
 
@@ -77,12 +60,6 @@ passport.use(new LocalStrategy({
     } catch (err) {
         return done(err);
     }
-}));
-
-
-passport.serializeUser((user, done) => {
-    done(null, user.id); 
-});
 
 passport.deserializeUser(async (id, done) => {
     try {
@@ -102,8 +79,6 @@ const PORT = process.env.PORT;
 
 // Routes:
 app.use('/', homeRoutes);
-app.use('/slam', slamRoutes);
-app.use('/auth', authRoutes);
 
 app.use('*', (err, req, res, next) => {
     if (err) { res.json({ err: err }) };

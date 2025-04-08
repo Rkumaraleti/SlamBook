@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 //Context:
-import { useAuth } from "../context/authContext";
 
 // Toaster:
 import { toast } from "react-toastify";

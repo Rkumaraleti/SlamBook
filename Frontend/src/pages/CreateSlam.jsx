@@ -1,8 +1,6 @@
 /* eslint-disable no-dupe-keys */
 import { useState } from "react";
 
-import { useAuth } from "../context/authContext";
-
 import axios from "axios";
 
 import { toast } from "react-toastify";

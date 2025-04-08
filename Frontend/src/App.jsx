@@ -16,14 +16,8 @@ import EditSlam from "./pages/EditSlam";
 import SlamResponses from "./pages/SlamResponses";
 import SlamResponsePage from "./pages/SlamResponsePage";
 
-// Context:
-import { AuthProvider } from "./context/authContext";
-
 // Components:
 import Navbar from "./components/Navbar";
-
-// Error Handling:
-import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   return (

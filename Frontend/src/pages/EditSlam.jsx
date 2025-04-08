@@ -1,16 +1,12 @@
 /* eslint-disable no-dupe-keys */
 import { useState, useEffect } from "react";
 
-import { useAuth } from "../context/authContext";
-
 import axios from "axios";
 
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 function EditSlam() {
-  const { user } = useAuth();
-
   const Navigate = useNavigate();
 
   const [questions, setQuestions] = useState([]);

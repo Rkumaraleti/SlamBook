@@ -6,10 +6,6 @@ import CustomButton from "../components/CustomButton";
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-
-// Context:
-import { useAuth } from "../context/authContext";
-
 // Toaster:
 import { toast } from "react-toastify";
 

@@ -5,7 +5,6 @@ import axios from "axios";
 const SlamResponsePage = () => {
   const { id } = useParams();
 
-  //   const { user } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [slamer, setSlamer] = useState("");
