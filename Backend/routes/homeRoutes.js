@@ -3,11 +3,28 @@ const router = express.Router();
 
 const {body} = require('express-validator')
 
-//Middlware:
-const { isLoggedIn } = require('../middlewares/middlware');
-
 // Controller:
 const initialRouteController = require('../controllers/initialRouteController');
+
+// JWT Middleware:
+const jwt = require('jsonwebtoken');
+
+// Middleware to authenticate JWT
+const authenticateJWT = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Attach user info to the request
+        next();
+    } catch (err) {
+        return res.status(403).json({ message: 'Forbidden: Invalid token' });
+    }
+};
 
 
 router.get('/', (req, res) => {
@@ -15,10 +32,10 @@ router.get('/', (req, res) => {
 })
 
 router.route('/createslam')
-    .post(isLoggedIn, initialRouteController.createSlam)
+    .post(authenticateJWT, initialRouteController.createSlam)
 
 router.route('/slambrary')
-    .get(isLoggedIn, initialRouteController.slambrary)
+    .get(authenticateJWT, initialRouteController.slambrary)
     
 
 module.exports = router;

@@ -7,7 +7,7 @@ const Home = () => {
     <>
       <section className="w-screen h-screen flex justify-center items-center bg-gradient-to-t from-cyan-500 to-transparent">
         <div id="title" className="text-center">
-          <div className="p-6" id="title-text">
+          <div className="" id="title-text">
             <h1 className="md:text-6xl font-bold py-3 text-3xl">
               The SlamBook
             </h1>

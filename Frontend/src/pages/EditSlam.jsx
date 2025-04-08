@@ -1,13 +1,15 @@
 /* eslint-disable no-dupe-keys */
 import { useState, useEffect } from "react";
 
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 function EditSlam() {
   const Navigate = useNavigate();
+
+  const { user } = true;
 
   const [questions, setQuestions] = useState([]);
   const [slamName, setSlamName] = useState("");
@@ -17,7 +19,7 @@ function EditSlam() {
 
   useEffect(() => {
     (async () => {
-      const slam = await axios.get(
+      const slam = await axiosInstance.get(
         `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`
       );
       setQuestions(slam.data[0].questions);
@@ -57,7 +59,7 @@ function EditSlam() {
       return;
     }
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}/editslam`,
         [questions, slamName],
         {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 // Toaster:
 import { toast } from "react-toastify";
+import { useAuth } from "../context/authContext";
 
 function Slam() {
   const { user } = useAuth();
@@ -20,7 +21,7 @@ function Slam() {
 
   useEffect(() => {
     (async () => {
-      const slam = await axios.get(
+      const slam = await axiosInstance.get(
         `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`
       );
       setQuestions(slam.data[0].questions);
@@ -45,7 +46,7 @@ function Slam() {
       Navigate("/login");
     }
 
-    const submit = await axios.post(
+    const submit = await axiosInstance.post(
       `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`,
       [questions, answers, theuser._id],
       { withCredentials: true }

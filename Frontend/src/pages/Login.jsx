@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 import CustomButton from "../components/CustomButton";
 
 import { useState } from "react";
+import { useAuth } from "../context/authContext";
 
 import { useNavigate } from "react-router-dom";
 // Toaster:
@@ -38,14 +39,16 @@ const Login = () => {
       "invalid:focus:border-red-500"
     );
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_SERVER_URL}/auth/login`,
         formData,
         {
           withCredentials: true,
         }
       );
-      login(res.data.user, res.data.message);
+
+      const { userWithoutPassword, token } = res.data;
+      login(userWithoutPassword, token);
       Navigate("/");
     } catch (err) {
       toast.error(err.response.data.message);

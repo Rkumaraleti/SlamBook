@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 import { useState } from "react";
 
@@ -49,7 +49,7 @@ const Register = () => {
     );
 
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_SERVER_URL}/auth/register`,
         formData
       );

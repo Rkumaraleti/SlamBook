@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const SlamResponses = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `${import.meta.env.VITE_SERVER_URL}/slam/${id}/slamresponses`,
         {
           withCredentials: true,

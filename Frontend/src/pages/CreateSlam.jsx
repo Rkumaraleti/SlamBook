@@ -1,13 +1,13 @@
 /* eslint-disable no-dupe-keys */
 import { useState } from "react";
 
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 function CreateSlamForm() {
-  const { user } = useAuth();
+  const { user } = true;
 
   const Navigate = useNavigate();
 
@@ -46,7 +46,7 @@ function CreateSlamForm() {
       return;
     }
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_SERVER_URL}/createslam`,
         [formFields, slamName],
         {

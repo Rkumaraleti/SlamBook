@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ const Slambrary = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `${import.meta.env.VITE_SERVER_URL}/slambrary`,
         {
           withCredentials: true,

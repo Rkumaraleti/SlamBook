@@ -1,22 +1,21 @@
-//Express Config:
+// Express Config:
 const express = require('express');
 const app = express();
-app.use(express.json()); // <- Express Json to handle json
+app.use(express.json()); // Express JSON to handle JSON requests
 
-//Body-Parser:
-const bodyParser = require('body-parser')
+// Body-Parser:
+const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Env File Configuration:
-const dotenv = require('dotenv');
-dotenv.config({ path: __dirname + '/../.env' });
+// Env File Configuration:
+const dotenv = require('dotenv').config();
 
-// cors policy:
+// CORS Policy:
 const cors = require('cors');
 app.use(cors({
-    origin: process.env.CLIENT_URL, 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    origin: process.env.CLIENT_URL,
+    credentials: true, // Allow credentials
+    optionSuccessStatus: 200
 }));
 
 // Mongoose & Mongo:
@@ -34,57 +33,45 @@ db.on('error', (error) => {
 // Models:
 const UserModel = require('./models/userModel');
 
-//Passport:
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+// JWT Middleware:
+const jwt = require('jsonwebtoken');
 
-const bcrypt = require('bcrypt');
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-}, async (username, password, done) => {
-    try {
-        const user = await UserModel.findOne({ email: username });
-        if (!user) {
-            return done(null, false, { message: 'Incorrect username' });
-        }
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return done(null, false, { message: 'Incorrect password' });
-        }
-        return done(null, user);
-    } catch (err) {
-        return done(err);
+// Middleware to authenticate JWT
+const authenticateJWT = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
 
-passport.deserializeUser(async (id, done) => {
+    const token = authHeader.split(' ')[1];
     try {
-        const user = await UserModel.findById(id);
-        done(null, user);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded; // Attach user info to the request
+        next();
     } catch (err) {
-        done(err);
+        return res.status(403).json({ message: 'Forbidden: Invalid token' });
     }
-});
+};
 
-// Requiring Routes: 
-const homeRoutes = require('./routes/homeRoutes')
-const slamRoutes = require('./routes/slamRoutes')
+// Requiring Routes:
 const authRoutes = require('./routes/authRoutes');
+const slamRoutes = require('./routes/slamRoutes');
+const homeRoutes = require('./routes/homeRoutes');
+const errorMiddleware = require('./middlewares/middlware');
 
 const PORT = process.env.PORT;
 
 // Routes:
-app.use('/', homeRoutes);
+// Public routes (no authentication required)
+app.use('/auth', authRoutes); // Authentication routes
+app.use('/',homeRoutes); // Home routes
 
-app.use('*', (err, req, res, next) => {
-    if (err) { res.json({ err: err }) };
-    next();
-})
+// Protected routes (JWT authentication required)
+app.use('/slam', authenticateJWT, slamRoutes); // Protect slam routes with JWT
 
+app.use(errorMiddleware); // Error handling middleware
+
+// Start the server:
 app.listen(PORT, () => {
-    console.log("Backend is Active")
-})
+    console.log(`Backend is Active on Port ${PORT}`);
+});

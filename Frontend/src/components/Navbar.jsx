@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
-// import axios from "axios";
+import { useAuth } from "../context/authContext";
+// import axiosInstance from "../services/axiosInstance";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -20,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="md:flex px-5 py-2 fixed top-0 w-full items-center backdrop-blur justify-between m-auto z-20">
+    <nav className="md:flex px-5 py-2 w-full items-center backdrop-blur justify-between m-auto">
       <div>
         <p className="flex justify-between nav-title text-lg font-bold hover:underline nav-title">
           <Link to="/">SlamBook</Link>

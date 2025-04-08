@@ -1,7 +1,8 @@
+import { useAuth } from "../context/authContext";
 import Slambrary from "./Slambrary";
 
 const Profile = () => {
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const { user } = useAuth();
 
   return (
     <>

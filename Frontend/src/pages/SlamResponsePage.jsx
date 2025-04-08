@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../services/axiosInstance";
+// import { useAuth } from "../context/authContext";
 
 const SlamResponsePage = () => {
   const { id } = useParams();
 
+  // const { user } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [slamer, setSlamer] = useState("");
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `${import.meta.env.VITE_SERVER_URL}/slam/${id}/showslam`,
         {
           withCredentials: true,
