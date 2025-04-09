@@ -4,6 +4,15 @@ import Slambrary from "./Slambrary";
 const Profile = () => {
   const { user } = useAuth();
 
+  // If user is not available, show a loading message or redirect to login
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold text-red-500">Loading...</h1>
+      </div>
+    );
+  }
+
   return (
     <>
       <div id="profile" className="w-screen mt-[5rem]">
