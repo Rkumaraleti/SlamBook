@@ -8,12 +8,9 @@ const SlamResponses = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axiosInstance.get(
-        `${import.meta.env.VITE_SERVER_URL}/slam/${id}/slamresponses`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axiosInstance.get(`/slam/${id}/slamresponses`, {
+        withCredentials: true,
+      });
       setslams(res.data.slams);
     };
     fetch();

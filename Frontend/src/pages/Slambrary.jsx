@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
+
 const Slambrary = () => {
   const [slams, setslams] = useState([]);
+
+  const navigate = useNavigate();
 
   const copySlam = (id) => {
     let slamLink = `${import.meta.env.VITE_CLIENT_URL}/slam/${id}`;
@@ -17,18 +21,19 @@ const Slambrary = () => {
   };
 
   useEffect(() => {
-    const fetch = async () => {
-      const res = await axiosInstance.get(
-        `${import.meta.env.VITE_SERVER_URL}/slambrary`,
-        {
+    try {
+      const fetch = async () => {
+        const res = await axiosInstance.get(`/slambrary`, {
           withCredentials: true,
-        }
-      );
-
-      setslams(res.data);
-    };
-    fetch();
-  }, []);
+        });
+        setslams(res.data);
+      };
+      fetch();
+    } catch (error) {
+      toast.warn("Error fetching slams");
+      navigate("/login");
+    }
+  });
 
   return (
     <>

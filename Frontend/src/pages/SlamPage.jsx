@@ -21,9 +21,7 @@ function Slam() {
 
   useEffect(() => {
     (async () => {
-      const slam = await axiosInstance.get(
-        `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`
-      );
+      const slam = await axiosInstance.get(`/slam/${slamId}`);
       setQuestions(slam.data[0].questions);
       setSlamname(slam.data[0].slamname);
     })();
@@ -47,7 +45,7 @@ function Slam() {
     }
 
     const submit = await axiosInstance.post(
-      `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`,
+      `/slam/${slamId}`,
       [questions, answers, theuser._id],
       { withCredentials: true }
     );

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { setLogoutFunction } from "../services/axiosInstance";
 
 const AuthContext = createContext();
 
@@ -7,29 +7,29 @@ export const useAuth = () => useContext(AuthContext);
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // User state
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
-  // Function to log in the user
-  const login = (userData, token) => {
-    try {
-      setUser(userData); // Set user state
-      localStorage.setItem("jwtToken", token); // Store JWT token in localStorage
-      localStorage.setItem("user", JSON.stringify(userData)); // Store user data in localStorage
-    } catch (error) {
-      console.error("Error storing user data:", error);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
+
+    // Pass the logout function to axiosInstance
+    setLogoutFunction(logout);
+  }, []);
+
+  const login = (userData, token) => {
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("jwtToken", token);
   };
 
   const logout = () => {
-    try {
-      setUser(null); // Clear user state
-      localStorage.removeItem("jwtToken"); // Remove JWT token from localStorage
-      localStorage.removeItem("user"); // Remove user data from localStorage
-      navigate("/login"); // Redirect to login page
-    } catch (error) {
-      console.error("Error clearing user data:", error);
-    }
+    setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("jwtToken");
+    window.location.href = "/login"; // Redirect to login page
   };
 
   return (

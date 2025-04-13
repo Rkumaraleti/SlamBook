@@ -19,9 +19,7 @@ function EditSlam() {
 
   useEffect(() => {
     (async () => {
-      const slam = await axiosInstance.get(
-        `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}`
-      );
+      const slam = await axiosInstance.get(`/slam/${slamId}`);
       setQuestions(slam.data[0].questions);
       setSlamName(slam.data[0].slamname);
     })();
@@ -60,7 +58,7 @@ function EditSlam() {
     }
     try {
       const res = await axiosInstance.post(
-        `${import.meta.env.VITE_SERVER_URL}/slam/${slamId}/editslam`,
+        `/slam/${slamId}/editslam`,
         [questions, slamName],
         {
           withCredentials: true,

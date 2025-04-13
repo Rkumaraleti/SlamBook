@@ -13,12 +13,9 @@ const SlamResponsePage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axiosInstance.get(
-        `${import.meta.env.VITE_SERVER_URL}/slam/${id}/showslam`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axiosInstance.get(`/slam/${id}/showslam`, {
+        withCredentials: true,
+      });
       const slam = res.data.slams[0];
       setQuestions(slam.questions);
       setAnswers(slam.answers);

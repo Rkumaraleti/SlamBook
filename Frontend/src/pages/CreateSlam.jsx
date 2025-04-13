@@ -5,9 +5,10 @@ import axiosInstance from "../services/axiosInstance";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 function CreateSlamForm() {
-  const { user } = true;
+  const { user } = useAuth();
 
   const Navigate = useNavigate();
 
@@ -47,12 +48,13 @@ function CreateSlamForm() {
     }
     try {
       const res = await axiosInstance.post(
-        `${import.meta.env.VITE_SERVER_URL}/createslam`,
+        `/createslam`,
         [formFields, slamName],
         {
           withCredentials: true,
         }
       );
+      console.log(res.data);
       toast.success(res.data.message);
       clearState();
     } catch (err) {

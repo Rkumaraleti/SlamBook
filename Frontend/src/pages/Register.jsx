@@ -49,10 +49,7 @@ const Register = () => {
     );
 
     try {
-      const res = await axiosInstance.post(
-        `${import.meta.env.VITE_SERVER_URL}/auth/register`,
-        formData
-      );
+      const res = await axiosInstance.post(`/auth/register`, formData);
       toast.success(res.data.message);
       Navigate("/");
     } catch (err) {

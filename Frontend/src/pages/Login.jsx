@@ -39,13 +39,9 @@ const Login = () => {
       "invalid:focus:border-red-500"
     );
     try {
-      const res = await axiosInstance.post(
-        `${import.meta.env.VITE_SERVER_URL}/auth/login`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axiosInstance.post(`/auth/login`, formData, {
+        withCredentials: true,
+      });
 
       const { userWithoutPassword, token } = res.data;
       login(userWithoutPassword, token);
