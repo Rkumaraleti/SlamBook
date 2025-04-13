@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Function to log out the user
   const logout = () => {
     try {
       setUser(null); // Clear user state
@@ -32,20 +31,6 @@ export const AuthProvider = ({ children }) => {
       console.error("Error clearing user data:", error);
     }
   };
-
-  // Function to persist user on app initialization
-  useEffect(() => {
-    try {
-      const token = localStorage.getItem("jwtToken");
-      const storedUser = localStorage.getItem("user");
-
-      if (token && storedUser) {
-        setUser(JSON.parse(storedUser)); // Restore user state from localStorage
-      }
-    } catch (error) {
-      console.error("Error restoring user data:", error);
-    }
-  }, []);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
