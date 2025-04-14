@@ -11,6 +11,10 @@ const router = express.Router();
 router.route('/:id/editslam')
     .post(slamRouteController.editSlam);
 
+// To Delete Slam:
+router.route('/:id')
+    .delete(slamRouteController.deleteSlam);
+
 // To See Responses of Slam:
 router.route('/:id/slamresponses')
     .get(slamRouteController.slamResponseShow);

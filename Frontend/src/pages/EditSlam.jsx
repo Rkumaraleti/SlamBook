@@ -5,11 +5,12 @@ import axiosInstance from "../services/axiosInstance";
 
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 function EditSlam() {
   const Navigate = useNavigate();
 
-  const { user } = true;
+  const { user } = useAuth();
 
   const [questions, setQuestions] = useState([]);
   const [slamName, setSlamName] = useState("");
@@ -37,13 +38,30 @@ function EditSlam() {
   };
 
   const handleAddTodo = () => {
-    setQuestions([...questions, { question: "" }]);
+    setQuestions([...questions, ""]);
   };
 
   const handleDeleteTodo = (i) => {
     const newformFields = [...questions];
     newformFields.splice(i, 1);
     setQuestions(newformFields);
+  };
+
+  const handleDeleteSlam = async () => {
+    if (!user) {
+      toast.warn("Login to delete slam");
+      return;
+    }
+    try {
+      const res = await axiosInstance.delete(`/slam/${slamId}`, {
+        withCredentials: true,
+      });
+      toast.success(res.data.message);
+      Navigate("/");
+    } catch (err) {
+      toast.error(err.response.data.message);
+      Navigate("/pricing");
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -120,18 +138,29 @@ function EditSlam() {
               </div>
             ))}
           </div>
-          <button
-            onClick={handleAddTodo}
-            className="p-3 m-1 rounded-3xl hover:shadow-xl bg-yellow-400 hover:bg-yellow-300 gsap-form-button"
-          >
-            Add New
-          </button>
-          <button
-            type="submit"
-            className="p-3 m-1 rounded-3xl hover:shadow-xl bg-cyan-400 hover:bg-cyan-300 gsap-form-button"
-          >
-            Update Slam
-          </button>
+          <div>
+            <button
+              onClick={handleAddTodo}
+              className="p-3 m-1 rounded-3xl hover:shadow-xl bg-yellow-400 hover:bg-yellow-300 gsap-form-button"
+            >
+              Add New
+            </button>
+            <button
+              type="submit"
+              className="p-3 m-1 rounded-3xl hover:shadow-xl bg-cyan-400 hover:bg-cyan-300 gsap-form-button"
+            >
+              Update Slam
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={handleDeleteSlam}
+              className="p-3 m-1 rounded-3xl hover:shadow-xl bg-red-400 hover:bg-red-300 gsap-form-button"
+            >
+              Delete Slam
+            </button>
+          </div>
         </form>
       </section>
       {/* <Slambrary /> */}

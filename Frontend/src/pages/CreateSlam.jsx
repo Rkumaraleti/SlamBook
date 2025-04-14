@@ -38,10 +38,6 @@ function CreateSlamForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const clearState = () => {
-      setSlamName("");
-      setformFields([{ question: "" }]);
-    };
     if (!user) {
       toast.warn("Login to create slam");
       return;
@@ -54,13 +50,14 @@ function CreateSlamForm() {
           withCredentials: true,
         }
       );
-      console.log(res.data);
+
       toast.success(res.data.message);
-      clearState();
     } catch (err) {
       toast.error(err.response.data.message);
       Navigate("/pricing");
     }
+    setSlamName("");
+    setformFields([{ question: "" }]);
   };
 
   return (
@@ -76,6 +73,7 @@ function CreateSlamForm() {
                   type="text"
                   placeholder="Enter your Slamcard Name"
                   name="slamname"
+                  value={slamName}
                   onChange={(e) => handleSlamName(e)}
                   required
                   className="m-3 w-[80vw] focus:outline-none text-center gsap-form-inpu text-xl md:text-4xl font-bold gsap-title"
@@ -86,7 +84,7 @@ function CreateSlamForm() {
           </div>
 
           <div className="p-5">
-            {formFields.map((question, index) => (
+            {formFields.map((field, index) => (
               <div
                 key={index}
                 className="p-3 flex w-screen items-center justify-center"
@@ -96,6 +94,7 @@ function CreateSlamForm() {
                     type="text"
                     placeholder={`Enter Question ${index + 1}`}
                     name={"question" + index}
+                    value={field.question}
                     onChange={(e) => handleTodoChange(e, index)}
                     required
                     className="m-2 w-[60vw] border-b-2 focus:border-black focus:outline-none text-center gsap-form-input"

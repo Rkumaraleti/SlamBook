@@ -1,6 +1,8 @@
 const Slam = require('../models/slamModel');
 const SlamCard = require('../models/slamcardModel');
 
+const UserModel = require('../models/userModel');
+
 exports.findSlamCard = async (req, res) => {
     const response = await SlamCard.find(
         { _id: `${req.params.id}` });
@@ -39,6 +41,36 @@ exports.editSlam = async (req, res) => {
         return res.json({ message: 'Access Denied!' });
     }
 }
+
+exports.deleteSlam = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the slam by ID
+        const slam = await SlamCard.findById(id);
+        if (!slam) {
+            return res.status(404).json({ message: "Slam not found" });
+        }
+
+        // Check if the logged-in user is the owner of the slam
+        if (slam.owner.toString() !== req.user.id) {
+            return res.status(403).json({ message: "Access Denied!" });
+        }
+
+        // Remove the slam reference from the user's array
+        await UserModel.findByIdAndUpdate(req.user.id, {
+            $pull: { slamcards: id }, // Remove the slam ID from the user's slamcards array
+        });
+
+        // Delete the slam itself
+        await SlamCard.findByIdAndDelete(id);
+
+        return res.status(200).json({ message: "Slam Deleted Successfully" });
+    } catch (error) {
+        console.error("Error deleting slam:", error);
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
 
 exports.slamResponseShow = async (req, res) => {
     const { id } = req.params;
