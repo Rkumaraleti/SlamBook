@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 app.use(express.json()); // Express JSON to handle JSON requests
 
+// JWT Middleware:
+const jwt = require('jsonwebtoken');
+
 // Body-Parser:
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,9 +35,6 @@ db.on('error', (error) => {
 
 // Models:
 const UserModel = require('./models/userModel');
-
-// JWT Middleware:
-const jwt = require('jsonwebtoken');
 
 // Middleware to authenticate JWT
 const authenticateJWT = (req, res, next) => {
