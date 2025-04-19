@@ -16,10 +16,12 @@ const dotenv = require('dotenv').config();
 // CORS Policy:
 const cors = require('cors');
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: [process.env.CLIENT_URL],
     credentials: true, // Allow credentials
-    optionSuccessStatus: 200
+    optionSuccessStatus: 200,
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"], // Allow these headers
 }));
+app.options('*', cors());
 
 // Mongoose & Mongo:
 const mongoose = require('mongoose');

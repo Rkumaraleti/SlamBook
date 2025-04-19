@@ -12,6 +12,10 @@ export const setLogoutFunction = (logout) => {
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL, // Use environment variable for the server URL
     withCredentials: true, // Include cookies in requests
+    headers: {
+        "Content-Type": "application/json", // Ensure the content type is JSON
+        "Accept": "application/json", // Specify the accepted response format
+    },
 });
 
 // Add a request interceptor to include the Authorization header
