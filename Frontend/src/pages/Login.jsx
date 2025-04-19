@@ -38,6 +38,15 @@ const Login = () => {
       "invalid:bg-red-500/30",
       "invalid:focus:border-red-500"
     );
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    if (!formData.password || formData.password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return;
+    }
     try {
       const res = await axiosInstance.post(`/auth/login`, formData, {
         withCredentials: true,
