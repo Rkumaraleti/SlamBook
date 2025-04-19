@@ -61,7 +61,7 @@ const slamRoutes = require('./routes/slamRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 const errorMiddleware = require('./middlewares/middlware');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 // Routes:
 // Public routes (no authentication required)
