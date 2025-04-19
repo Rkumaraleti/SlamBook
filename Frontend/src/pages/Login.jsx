@@ -42,13 +42,17 @@ const Login = () => {
       const res = await axiosInstance.post(`/auth/login`, formData, {
         withCredentials: true,
       });
-
       const { userWithoutPassword, token } = res.data;
       login(userWithoutPassword, token);
       Navigate("/");
     } catch (err) {
-      toast.error(err.response.data.message);
-      Navigate("/login");
+      console.log(err.response);
+      // Check if the error response exists and has a message
+      if (err.response && err.response.data && err.response.data.message) {
+        toast.error(err.response.data.message); // Show the error message from the backend
+      } else {
+        toast.error("An unexpected error occurred. Please try again."); // Fallback error message
+      }
     }
   };
 
@@ -83,6 +87,11 @@ const Login = () => {
                   />
                 </div>
                 <div>
+                  <CustomButton
+                    text="Register"
+                    buttonStyle={"hover:bg-cyan-300 bg-cyan-400"}
+                    routeTo={"/register"}
+                  />
                   <button
                     type="Submit"
                     className={
@@ -92,11 +101,6 @@ const Login = () => {
                   >
                     Login
                   </button>
-                  <CustomButton
-                    text="Register"
-                    buttonStyle={"hover:bg-cyan-300 bg-cyan-400"}
-                    routeTo={"/register"}
-                  />
                 </div>
               </div>
 
