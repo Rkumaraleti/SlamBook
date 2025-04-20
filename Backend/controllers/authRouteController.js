@@ -21,9 +21,7 @@ exports.login = async (req, res) => {
             expiresIn: '1d', // Token expires in 1 day
         });
 
-
-        const { password: _, ...userWithoutPassword } = user.toObject(); // Exclude password from user object
-        res.status(200).json({ token, userWithoutPassword, message: 'Login successful!' });
+        res.status(200).json({ token, message: 'Login successful!' });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ message: 'Server error', error: err.message });

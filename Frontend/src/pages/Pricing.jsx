@@ -24,7 +24,7 @@ const Pricing = ({ backgroundStyle, marginTop }) => {
           <div className="max-w-sm rounded-lg overflow-hidden shadow-lg p-6 m-2 bg-white hover:shadow-sm hover:bg-zinc-100">
             <img
               className="w-[150px] p-2 m-auto"
-              src="../src/assets/images/free.png"
+              src="/assets/images/free.png"
               alt="Sunset in the mountains"
             />
             <div className="px-6 py-4">
@@ -38,7 +38,7 @@ const Pricing = ({ backgroundStyle, marginTop }) => {
           <div className="max-w-sm rounded-lg overflow-hidden bg-pink-400 shadow-lg p-6 m-2 hover:shadow-sm hover:bg-pink-300">
             <img
               className="w-[150px] p-2 m-auto"
-              src="../src/assets/images/premium.png"
+              src="/assets/images/premium.png"
               alt="Sunset in the mountains"
             />
             <div className="px-6 py-4">

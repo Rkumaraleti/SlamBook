@@ -4,7 +4,7 @@ import { useAuth } from "../context/authContext";
 // import axiosInstance from "../services/axiosInstance";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { token, logout } = useAuth();
 
   const hamBurger = () => {
     const menu1 = document.getElementById("hamBurger-menu-list");
@@ -62,7 +62,7 @@ const Navbar = () => {
         className="flex gap-3 pr-3 items-center justify-center hidden md:block"
         id="hamBurger-menu-buttons"
       >
-        {!user && (
+        {!token && (
           <>
             <CustomButton
               text="Login"
@@ -79,7 +79,7 @@ const Navbar = () => {
           </>
         )}
 
-        {user && (
+        {token && (
           <>
             <CustomButton
               text="Profile"

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
 function CreateSlamForm() {
-  const { user } = useAuth();
+  const { token } = useAuth();
 
   const Navigate = useNavigate();
 
@@ -38,7 +38,7 @@ function CreateSlamForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!user) {
+    if (!token) {
       toast.warn("Login to create slam");
       return;
     }

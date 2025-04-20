@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../context/authContext";
 
 function Slam() {
-  const { user } = useAuth();
+  const { token } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [slamname, setSlamname] = useState("");
@@ -37,16 +37,16 @@ function Slam() {
     event.preventDefault();
     // eslint-disable-next-line no-dupe-keys
 
-    let theuser = JSON.parse(user);
+    // let theuser = JSON.parse(user);
 
-    if (!user) {
+    if (!token) {
       toast.warn("Login to submit the slam response");
       Navigate("/login");
     }
 
     const submit = await axiosInstance.post(
       `/slam/${slamId}`,
-      [questions, answers, theuser._id],
+      [questions, answers, token],
       { withCredentials: true }
     );
     if (submit.data.status == 200) {

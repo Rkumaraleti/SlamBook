@@ -6,6 +6,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 import CustomButton from "../components/CustomButton";
+import GoogleLogin from "../components/GoogleLogin";
 
 // Navigate:
 import { useNavigate } from "react-router-dom";
@@ -115,11 +116,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="w-100 border-2 border-black py-3 bg-white-500 hover:bg-cyan-400 rounded m-2 hover:text-white">
-                <button className="text-md">
-                  <i className="fa-brands fa-google"></i> Google
-                </button>
-              </div>
+              <GoogleLogin />
             </div>
           </form>
         </section>

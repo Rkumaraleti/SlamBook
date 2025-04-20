@@ -36,30 +36,84 @@ db.on('error', (error) => {
 });
 
 // Models:
-const UserModel = require('./models/userModel');
+const User = require('./models/userModel');
 
-// Middleware to authenticate JWT
-const authenticateJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Unauthorized: No token provided' });
-    }
+//Passport:
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-    const token = authHeader.split(' ')[1];
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Attach user info to the request
-        next();
-    } catch (err) {
-        return res.status(403).json({ message: 'Forbidden: Invalid token' });
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        // Check if the user already exists in the database
+        let user = await User.findOne({ email: profile.emails[0].value });
+
+        if (!user) {
+          // If the user does not exist, create a new user
+          user = new User({
+            googleId: profile.id,
+            username: profile.displayName,
+            email: profile.emails[0].value,
+            // avatar: profile.photos[0].value,
+            premium: false, // Default value for premium status
+            slamcards: [], // Initialize with an empty array
+          });
+
+          // Save the new user to the database
+          await user.save();
+        }
+
+        // Generate a JWT token for the user
+        const token = jwt.sign(
+          { id: user._id, email: user.email, name: user.name },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" }
+        );
+
+        // Pass the user and token to the callback
+        return done(null, { user, token });
+      } catch (error) {
+        console.error("Error in Google Strategy:", error);
+        return done(error, null);
+      }
     }
-};
+  )
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+
+// Google Login Route
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+// Google Callback Route
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    // Send the JWT token to the frontend
+    const { token } = req.user;
+    res.redirect(`${process.env.CLIENT_URL}/login/callback?token=${token}`);
+  }
+);
+
+
 
 // Requiring Routes:
 const authRoutes = require('./routes/authRoutes');
 const slamRoutes = require('./routes/slamRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 const errorMiddleware = require('./middlewares/middlware');
+const authenticateJWT = require('./middlewares/jwtAuthenticate');
 
 const PORT = process.env.PORT || 3000;
 

@@ -10,7 +10,7 @@ import { useAuth } from "../context/authContext";
 function EditSlam() {
   const Navigate = useNavigate();
 
-  const { user } = useAuth();
+  const { token } = useAuth();
 
   const [questions, setQuestions] = useState([]);
   const [slamName, setSlamName] = useState("");
@@ -20,7 +20,9 @@ function EditSlam() {
 
   useEffect(() => {
     (async () => {
-      const slam = await axiosInstance.get(`/slam/${slamId}`);
+      const slam = await axiosInstance.get(`/slam/${slamId}`, {
+        withCredentials: true,
+      });
       setQuestions(slam.data[0].questions);
       setSlamName(slam.data[0].slamname);
     })();
@@ -48,7 +50,7 @@ function EditSlam() {
   };
 
   const handleDeleteSlam = async () => {
-    if (!user) {
+    if (!token) {
       toast.warn("Login to delete slam");
       return;
     }
@@ -70,7 +72,7 @@ function EditSlam() {
     //   setSlamName("");
     //   setQuestions([{ question: "" }]);
     // };
-    if (!user) {
+    if (!token) {
       toast.warn("Login to create slam");
       return;
     }

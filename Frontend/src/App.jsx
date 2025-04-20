@@ -17,6 +17,7 @@ import SlamResponsePage from "./pages/SlamResponsePage";
 
 // Components:
 import Navbar from "./components/Navbar";
+import LoginCallBack from "./components/LoginCallBack";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/slambrary" element={<Slambrary />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/login/callback" element={<LoginCallBack />} />
           <Route path="/slam/:id/showslam" element={<SlamResponsePage />} />
           <Route path="/slam/:id" element={<SlamPage />} />
           <Route path="/editslam/:id" element={<EditSlam />} />

@@ -2,6 +2,7 @@
 import axiosInstance from "../services/axiosInstance";
 
 import CustomButton from "../components/CustomButton";
+import GoogleLogin from "../components/GoogleLogin";
 
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
@@ -51,8 +52,8 @@ const Login = () => {
       const res = await axiosInstance.post(`/auth/login`, formData, {
         withCredentials: true,
       });
-      const { userWithoutPassword, token } = res.data;
-      login(userWithoutPassword, token);
+      const { token } = res.data;
+      login(token);
       Navigate("/");
     } catch (err) {
       console.log(err.response);
@@ -110,13 +111,8 @@ const Login = () => {
                   >
                     Login
                   </button>
+                  <GoogleLogin />
                 </div>
-              </div>
-
-              <div className="w-100 border-2 border-black py-3 bg-white-500 hover:bg-cyan-400 rounded m-2 hover:text-white">
-                <button className="text-md">
-                  <i className="fa-brands fa-google"></i> Google
-                </button>
               </div>
             </div>
           </form>
